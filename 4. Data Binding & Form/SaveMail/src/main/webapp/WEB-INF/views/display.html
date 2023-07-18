@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <form>
+        <table>
+            <tr>
+                <th>Languages</th>
+                <th>Page size</th>
+                <th>Spam filter</th>
+                <th>Signature</th>
+            </tr>
+
+            <tr>
+                <td>
+                    <select>
+                        <option th:each="language : ${languages}" th:value="${language}" th:text="${language}"></option>
+                    </select>
+                </td>
+                <td>
+                    <select>
+                        <option th:each="numbers : ${#numbers.sequence(1,25)}"></option>
+                    </select>
+                </td>
+                <td>
+                    <input type="checkbox" th:name="spamFilter" th:checked="${spamFilter}" />
+                </td>
+                <td>
+                    <input type="text">
+                </td>
+                <td>
+                    <button type="submit" style="color: aqua">Update</button>
+                    <button>Cancel</button>
+                </td>
+
+            </tr>
+
+
+
+        </table>
+    </form>
+</div>
+</body>
+</html>
