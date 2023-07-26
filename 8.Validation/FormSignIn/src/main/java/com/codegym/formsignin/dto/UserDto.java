@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import org.springframework.validation.annotation.Validated;
 
 public class UserDto {
     private int id;
@@ -13,6 +14,7 @@ public class UserDto {
     private String lastName;
     private int age;
     @Pattern(regexp = "^[0-9]{10,15}$",message = "Phone number must have 10 to 15 digits and contain only numeric characters")
+
     private String numberPhone;
     @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Invalid email format")
     private String email;

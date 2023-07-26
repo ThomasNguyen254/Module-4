@@ -3,6 +3,7 @@ package com.codegym.formsignin.controller;
 import com.codegym.formsignin.dto.UserDto;
 import com.codegym.formsignin.model.User;
 import com.codegym.formsignin.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute UserDto userDto,
+    public String create(@Valid @ModelAttribute UserDto userDto,
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
