@@ -5,6 +5,33 @@
     <title>Title</title>
 </head>
 <body>
+<h3>Update</h3>
+<p>
+    <a th:href="@{/product}">
+        Back to product list
+    </a>
+</p>
+    <form th:object="${product}" th:action="@{/product/update}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <div>
+            <label>Name</label>
+            <input type="text" th:field="*{name}"/>
+        </div>
+        <div>
+            <label>Price</label>
+            <input type="text" th:field="*{price}"/>
+        </div>
+        <div>
+            <label>Description</label>
+            <input type="text" th:field="*{description}"/>
+        </div>
+        <div>
+            <label>Manufacturer</label>
+            <input type="file" th:field="*{manufacturer}"/>
+        </div>
+        <input type="submit"/>
+    </form>
 
+</form>
 </body>
 </html>

@@ -1,10 +1,46 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<a th:href="@{/song/create/}">Create</a>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Singer</th>
+        <th>Type</th>
+        <th>URL</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
 
+    <tr th:each="song,status:${songList}">
+        <td th:text="${status.count}"></td>
+        <td th:text="${song.id}"></td>
+        <td th:text="${song.name}"></td>
+        <td th:text="${song.singer}"></td>
+        <td th:text="${song.type}"></td>
+        <td th:text="${song.url}"></td>
+        <td>
+            <a th:href="@{/song/{id}/update/(id=${song.id})}">Detail2</a>
+        </td>
+        <td>
+            <button type="button" onclick="showInfoDelete('${song.getId()}','${song.getName()}')">Delete</button>
+        </td>
+
+    </tr>
+
+</table>
+
+<script>
+    function showInfoDelete(id,name) {
+        document.getElementById("id").value = id;
+        document.getElementById("name").innerText = name;
+    }
+</script>
 </body>
 </html>

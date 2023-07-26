@@ -24,11 +24,11 @@
                 </td>
                 <td>
                     <select>
-                        <option th:each="numbers : ${#numbers.sequence(1,25)}"></option>
+                        <option th:each="num : ${#numbers.sequence(1,25)}" th:text="${num}"></option>
                     </select>
                 </td>
                 <td>
-                    <input type="checkbox" th:name="spamFilter" th:checked="${spamFilter}" />
+                    <input type="checkbox" th:name="spamFilter" />
                 </td>
                 <td>
                     <input type="text">

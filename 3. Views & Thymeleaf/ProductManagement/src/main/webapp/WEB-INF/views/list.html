@@ -1,10 +1,73 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
+
+<!--<div th:insert="~{header}"></div>-->
+<!--<div th:insert="~{navbar}"></div>-->
 <body>
-$END$
+<a th:href="@{/product/create}">Thêm mới</a>
+<table id="productList">
+    <tr>
+        <th>STT</th>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Manufacturer</th>
+        <th>Delete</th>
+        <th>Edit</th>
+        <th>Detail</th>
+    </tr>
+
+    <tr th:each="product,status: ${productList}" >
+        <td th:text="${status.count}" ></td>
+        <td th:text="${product.id}" ></td>
+        <td th:text="${product.name}" ></td>
+        <td th:text="${product.price}" ></td>
+        <td th:text="${product.description}" ></td>
+        <td th:text="${product.manufacturer}" ></td>
+        <td>
+            <button type="button" onclick="showInfoDelete('${product.getId()}','${product.getName()}')" class="btn btn-primary"
+                    data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Delete
+            </button>
+        </td>
+        <td>
+            <a th:href="@{/product/{id}/update(id=${product.id})}">Edit</a>
+        </td>
+        <td>
+            <a th:href="@{/product/{id}/detail(id=${product.id})}">Detail</a>
+        </td>
+    </tr>
+</table>
+<p>${mess1}</p>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="/product/?action=delete" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="id" id="id">
+                    <span>Bạn có muốn xoá </span> <span id="name"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-primary">Yes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function showInfoDelete(id,name) {
+        document.getElementById("id").value = id;
+        document.getElementById("name").innerText = name;
+    }
+</script>
+
 </body>
 </html>

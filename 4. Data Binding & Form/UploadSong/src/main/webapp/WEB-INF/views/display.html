@@ -9,10 +9,10 @@
 <table>
     <tr>
         <th>STT</th>
-        <th>Name song :</th>
-        <th>Singer :</th>
-        <th>Type song :</th>
-        <th>Url :</th>
+        <th>Name song</th>
+        <th>Singer</th>
+        <th>Type song </th>
+        <th>Url</th>
     </tr>
     <tr th:each="song,status : ${songList}" >
         <td th:text="${status.count}"></td>
@@ -21,8 +21,10 @@
         <td th:each="song : ${song.type}">
             <span th:text="${song}"></span>
         </td>
+        <td th:text="${song.url}"></td>
     </tr>
 </table>
+<a th:href="@{/song/create}">Upload</a>
 
 </body>
 </html>
