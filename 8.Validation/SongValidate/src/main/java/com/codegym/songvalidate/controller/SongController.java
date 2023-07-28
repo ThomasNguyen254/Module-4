@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.concurrent.BlockingDeque;
 
 @Controller
 @RequestMapping("/song")
@@ -47,14 +48,19 @@ public class SongController {
         redirectAttributes.addFlashAttribute("messCreate","Create successfully");
         return "redirect:/song";
     }
-//    @GetMapping("/update")
-//    public String showFormUpdate(@PathVariable int id,Model model) {
-//        Song song = songService.findById(id);
-//
-//
-//
-//
-//    }
-
-
+    @GetMapping("/update/{id}")
+    public String showFormUpdate(@PathVariable int id,Model model) {
+        Song song = songService.findById(id);
+        model.addAttribute("song",song);
+        return "/update";
+    }
+    @PostMapping("/update")
+    public String update(@ModelAttribute Song song,
+                         RedirectAttributes redirectAttributes){
+        songService.save(song);
+        redirectAttributes.addFlashAttribute("messUpdate","Update successfully");
+        return "redirect:/song";
+        
+    }
+    
 }
