@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tạo mới sân bóng</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic+SC' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<center>
+    <body>
+    <h1>Thêm sân mới</h1>
+    <p>
+        <a th:href="@{/stadium}">Back</a>
+    </p>
+    <th:block th:if="${mess}">
+        <p th:text="${mess}" style="color: red"></p>
+    </th:block>
+    <form th:action="@{/stadium/create}" th:object="${stadiumDto}" method="post">
+        <table class="table table-light">
+            <tr>
+                <td><b>Tên sân:</b></td>
+                <td>
+                    <input type="text" th:field="*{name}" required/>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Địa chỉ:</b></td>
+                <td><input type="text" th:field="*{address}" required/></td>
+            </tr>
+            <tr>
+                <td><b>Khu vực:</b></td>
+                <td>
+                    <select th:field="*{area}" >
+                        <option th:each="a : ${areas}" th:value="${a.id}" th:text="${a.name}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Thời gian thuê:</b></td>
+                <td>
+                    <select th:field="*{timeSlot}" id="rentTypeSelect">
+                        <option th:each="r : ${timeSlots}" th:value="${r.id}" th:text="${r.timeSlots}" th:data-price="${r.price}"></option>
+                    </select>
+                    <span id="priceDisplay"></span>
+                </td>
+                <!--                <td><b>Giá:</b></td>-->
+                <!--                <td><span id="priceDisplay">&#45;&#45;</span></td>-->
+            </tr>
+            <tr>
+                <td><b>Loại sân:</b></td>
+                <td>
+                    <select th:field="*{type}">
+                        <option th:each="t : ${types}" th:value="${t.id}" th:text="'sân '+ ${t.peopleAmount}"></option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Tạo sân"></td>
+            </tr>
+        </table>
+    </form>
+    <script th:inline="javascript">
+        var rentTypeSelect = document.getElementById("rentTypeSelect");
+        var priceDisplay = document.getElementById("priceDisplay");
+
+        // Lắng nghe sự kiện thay đổi chọn trong thẻ <select>
+        rentTypeSelect.addEventListener("change", function () {
+            var selectedRentType = rentTypeSelect.options[rentTypeSelect.selectedIndex];
+
+            // Lấy giá trị từ thuộc tính 'data-price' của option đã chọn
+            var price = selectedRentType.getAttribute("data-price");
+
+            // Hiển thị giá trị giá mới
+            priceDisplay.textContent = "Giá: " + price;
+        });
+    </script>
+    </body>
+</center>
+
+</html>
