@@ -7,7 +7,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface StadiumRepository extends JpaRepository<Stadium,Long> {
-    Page<Stadium> findByName(Pageable pageable,String name);
-    Page<Stadium> findByNameAndAreaAndType(Pageable pageable, String name,Area area,Type type);
+    Page<Stadium> findByNameContaining(Pageable pageable,String name);
+    Page<Stadium> findAllByNameContainingAndAreaAndType(Pageable pageable,String name,Area area,Type type);
+    Page<Stadium> findAllByArea(Pageable pageable,Area area);
+    Page<Stadium> findAllByType(Pageable pageable,Type type);
+    List<Stadium> findAllByArea(Area area);
 }

@@ -96,7 +96,7 @@ public class StadiumController {
         redirectAttributes.addFlashAttribute("mess", "Add success");
         return "redirect:/stadium";
     }
-    @GetMapping("/{id}/delete")
+    @GetMapping("/{id}/delete/")
     public String delete(@PathVariable Long id, Model model) {
         stadiumService.remove(id);
         return "redirect:/stadium";
@@ -113,35 +113,61 @@ public class StadiumController {
             nameValue = OName.get();
         }
         Pageable pageable = PageRequest.of(page, size);
-//        if (type == null && nameValue == null) {
-//            Page<Stadium> stadiumPage = stadiumService.findAll(pageable);
+//        if (type == null && nameValue =="") {
+//            Page<Stadium> stadiumPage = stadiumService.findByArea(pageable,area);
 //            List<Area> areas = areaService.findAll();
 //            List<Type> types = typeService.findAll();
-//            model.addAttribute("stadiumPage", stadiumPage);
-//            model.addAttribute("type", types);
-//            model.addAttribute("area", areas);
-//            return "/stadium/list";
+//            List<Customer> customers = customerService.findAll();
+//            List<TimeSlot> timeSlots = timeSlotService.findAll();
+//            model.addAttribute("stadiumPage",stadiumPage);
+//            model.addAttribute("areas",areas);
+//            model.addAttribute("types",types);
+//            model.addAttribute("customers",customers);
+//            model.addAttribute("timeSlots",timeSlots);
+//            return "/list";
 //        }
 //        if (type == null && nameValue == "") {
 //            List<Area> areas = areaService.findAll();
 //            List<Type> types = typeService.findAll();
 //            model.addAttribute("type", types);
 //            model.addAttribute("area", areas);
-//            return "/stadium/list";
+//            return "/list";
 //        }
 //        if (area == null && nameValue == "") {
 //            List<Type> types = typeService.findAll();
 //            List<Area> areas = areaService.findAll();
 //            model.addAttribute("type", types);
 //            model.addAttribute("area", areas);
-//            return "/stadium/list";
+//            return "/list";
 //        }
-        Page<Stadium> stadiumPage = stadiumService.findByNameAndAreaAndType(pageable, nameValue, area, type);
+        Page<Stadium> stadiumPage = stadiumService.findAllByNameContainingAndAreaAndType(pageable, nameValue, area, type);
         List<Type> types = typeService.findAll();
         List<Area> areas = areaService.findAll();
         model.addAttribute("type", types);
         model.addAttribute("area", areas);
         model.addAttribute("stadiumPage", stadiumPage);
-        return "/stadium/list";
+        return "/list";
     }
+    @GetMapping("/searchArea")
+    public ModelAndView search(@ModelAttribute("area") Area area) {
+        List<Stadium> areas = stadiumService.findAllByArea(area);
+        ModelAndView modelAndView = new ModelAndView("list");
+        modelAndView.addObject("areas",areas);
+        return modelAndView;
+    }
+
+    @GetMapping("/detail/{id}")
+    public ModelAndView showDetailForm(@PathVariable Long id) {
+        Optional<Stadium> stadium = stadiumService.findById(id);
+        if (stadium.isPresent()) {
+            ModelAndView modelAndView = new ModelAndView("/detail");
+            modelAndView.addObject("stadium", stadium.get());
+            return modelAndView;
+        } else {
+            ModelAndView modelAndView = new ModelAndView("/error.404");
+            return modelAndView;
+        }
+    }
+
+
 }

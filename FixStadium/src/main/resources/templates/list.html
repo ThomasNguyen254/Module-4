@@ -13,6 +13,16 @@
 <a th:href="@{/stadium/create}" class="btn btn-primary">Thêm mới</a>
 <center>
   <h1>List stadium</h1>
+
+  <form method="get" th:action="@{/stadium/searchArea}">
+    <select name="area" >
+      <option >--Khu vực--</option>
+      <option th:each="area : ${areas}" th:value="${area.id}" th:text="${area.name}">
+      </option>
+    </select>
+    <button type="submit">Search</button>
+  </form>
+
   <form method="get" th:action="@{/stadium/searchAll}">
     Tên:
     <input name="name" type="text" />
@@ -58,10 +68,12 @@
     </th:block>
   </table>
   <div>
-    <a class="btn btn-primary" th:if="${stadiumPage.hasPrevious()}" th:href="@{/stadium(page=${stadiumPage.number - 1}, name=${name})}">Previous</a>
+    <a class="btn btn-primary" th:if="${stadiumPage.hasPrevious()}" th:href="@{/stadium(page=${stadiumPage.number - 1},name=${name})}">Previous</a>
     <span th:text="${stadiumPage.number + 1}"></span>/<span th:text="${stadiumPage.totalPages}"></span>
-    <a class="btn btn-primary" th:if="${stadiumPage.hasNext()}" th:href="@{/stadium(page=${stadiumPage.number + 1}, name=${name})}">Next</a>
+    <a class="btn btn-primary" th:if="${stadiumPage.hasNext()}" th:href="@{/stadium(page=${stadiumPage.number + 1},name=${name})}">Next</a>
   </div>
+
+
   <p></p>
   <!-- Thêm modal -->
   <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">

@@ -41,19 +41,16 @@
             <tr>
                 <td><b>Thời gian thuê:</b></td>
                 <td>
-                    <select th:field="*{timeSlot}" id="rentTypeSelect">
-                        <option th:each="r : ${timeSlots}" th:value="${r.id}" th:text="${r.timeSlots}" th:data-price="${r.price}"></option>
+                    <select th:field="*{timeSlot}">
+                        <option th:each="r : ${timeSlots}" th:value="${r.id}" th:text="${r.timeRange}"></option>
                     </select>
-                    <span id="priceDisplay"></span>
                 </td>
-                <!--                <td><b>Giá:</b></td>-->
-                <!--                <td><span id="priceDisplay">&#45;&#45;</span></td>-->
             </tr>
             <tr>
                 <td><b>Loại sân:</b></td>
                 <td>
                     <select th:field="*{type}">
-                        <option th:each="t : ${types}" th:value="${t.id}" th:text="'sân '+ ${t.peopleAmount}"></option>
+                        <option th:each="t : ${types}" th:value="${t.id}" th:text="${t.peopleAmount}"></option>
                     </select>
                 </td>
             </tr>

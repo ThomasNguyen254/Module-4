@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 public class StadiumService implements IStadiumService{
@@ -41,9 +42,28 @@ public class StadiumService implements IStadiumService{
     }
 
     @Override
-    public Page<Stadium> findByNameAndAreaAndType(Pageable pageable, String name, Area area, Type type) {
-        return stadiumRepository.findByNameAndAreaAndType(pageable,name,area,type);
+    public Page<Stadium> findAllByNameContainingAndAreaAndType(Pageable pageable, String name, Area area, Type type) {
+        return stadiumRepository.findAllByNameContainingAndAreaAndType(pageable,name,area,type);
     }
 
+    @Override
+    public Page<Stadium> findByArea(Pageable pageable, Area area) {
+        return stadiumRepository.findAllByArea(pageable, area);
+    }
+
+    @Override
+    public Page<Stadium> findAllByType(Pageable pageable, Type type) {
+        return stadiumRepository.findAllByType(pageable,type);
+    }
+
+    @Override
+    public Page<Stadium> findByNameContaining(Pageable pageable, String name) {
+        return stadiumRepository.findByNameContaining(pageable,name);
+    }
+
+    @Override
+    public List<Stadium> findAllByArea(Area area) {
+        return stadiumRepository.findAllByArea(area);
+    }
 
 }
