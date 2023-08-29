@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách câu hỏi</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic+SC' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<a th:href="@{/question/create}" class="btn btn-primary">Thêm mới</a>
+<center>
+    <h1>List Question</h1>
+
+    <form method="get" action="/question">
+        Tên:
+        <input name="tittleSearch" type="text" />
+
+        <select name="typeSearch" >
+            <option value="">--Loại câu hỏi--</option>
+            <option th:each="type : ${types}" th:value="${type.name}" th:text="${type.name}"></option>
+        </select>
+
+        <button type="submit">Search</button>
+    </form>
+    <br/>
+    <table class="table table-striped">
+        <tr>
+            <th>STT</th>
+            <th>Tiêu đề</th>
+            <th>Loại câu hỏi</th>
+            <th>Ngày đăng</th>
+            <th>Tình trạng</th>
+            <th>Tính năng</th>
+
+        </tr>
+        <th:block th:each="question,status : ${questionPage}">
+            <tr>
+                <td th:text="${status.count}">/td>
+                <td th:text="${question.tittle}"></td>
+                <td th:text="${question.type.name}"></td>
+                <td th:text="${question.postDate}"></td>
+                <td th:text="${question.status.name}"></td>
+                <td>
+                    <a th:href="@{/question/detail/__${question.id}__}" class="btn btn-info">Chi tiết</a>
+                    <a th:attr="data-question-id=${question.id}" class="btn btn-danger delete-link" href="#">Xoá</a>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+    <div>
+        <a class="btn btn-primary" th:if="${questionPage.hasPrevious()}" th:href="@{/question(page=${questionPage.number - 1},tittleSearch=${tittleSearch}, typeSearch=${typeSearch})}">Previous</a>
+        <span th:text="${questionPage.number + 1}"></span>/<span th:text="${questionPage.totalPages}"></span>
+        <a class="btn btn-primary" th:if="${questionPage.hasNext()}" th:href="@{/question(page=${questionPage.number + 1},tittleSearch=${tittleSearch}, typeSearch=${typeSearch})}">Next</a>
+    </div>
+
+    <p></p>
+    <!-- Thêm modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Xác nhận xoá</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xoá  <span id="questionNameSpan" class="text-danger"></span>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <a id="deleteLink" href="#" class="btn btn-danger">Xoá</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</center>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $(".delete-link").click(function() {
+            var questionId = $(this).data("question-id");
+            var deleteUrl = "/question/" + questionId + "/delete";
+            var questionName = $(this).data("question-name");
+            // Cập nhật tên sân trong modal
+            $("#questionNameSpan").text(questionName);
+            $("#deleteLink").attr("href", deleteUrl); // Cập nhật liên kết xoá trong modal
+            $("#deleteModal").modal("show"); // Mở modal
+        });
+    });
+
+</script>
+</body>
+</html>
