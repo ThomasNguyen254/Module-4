@@ -73,10 +73,4 @@ public class QuestionDto implements Validator {
     public void validate(Object target, Errors errors) {
 
     }
-
-    public void validateNameUnique(IQuestionService questionService, Errors errors) {
-        if (!questionService.isNameUnique(tittle)) {
-            errors.rejectValue("tittle", "error.stadiumDto", "Tên câu hỏi đã tồn tại.");
-        }
-    }
 }

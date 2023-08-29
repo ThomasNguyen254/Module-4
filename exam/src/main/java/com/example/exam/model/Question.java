@@ -13,11 +13,11 @@ public class Question {
     private String postDate;
 
     @ManyToOne
-    @JoinColumn(name="type_id",referencedColumnName = "id",unique = true)
+    @JoinColumn(name="type_id")
     private Type type;
 
     @ManyToOne
-    @JoinColumn(name="status_id",referencedColumnName = "id",unique = true)
+    @JoinColumn(name="status_id")
     private Status status;
 
     public Question() {
