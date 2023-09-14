@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết sân bóng</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic+SC' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<center>
+    <body>
+    <h1>Chi tiết câu hỏi</h1>
+    <p>
+        <a href="/question">Danh sách câu hỏi</a>
+    </p>
+    <th:block th:if="${mess}">
+        <p th:text="${mess}"></p>
+    </th:block>
+    <p hidden th:text="${question.id}"></p>
+    <table class="table table-light">
+        <tr>
+            <td><b>Tiêu đề</b></td>
+            <td><p th:text="${question.tittle}"></p></td>
+        </tr>
+        <tr>
+            <td><b>Loại câu hỏi:</b></td>
+            <td><p th:text="${question.type.name}"></p></td>
+        </tr>
+        <tr>
+            <td><b>Ngày Đăng:</b></td>
+            <td><p th:text="${question.postDate}"></p></td>
+        </tr>
+        <tr>
+            <td><b>Tình Trạng:</b></td>
+            <td><p th:text="${question.status.name}"></p></td>
+        </tr>
+    </table>
+    </body>
+</center>
+</html>

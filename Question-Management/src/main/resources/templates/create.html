@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tạo mới câu hỏi</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic+SC' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<center>
+    <body>
+    <h1>Thêm sân mới</h1>
+    <p>
+        <a th:href="@{/question}">Back</a>
+    </p>
+    <th:block th:if="${mess}">
+        <p th:text="${mess}" style="color: red"></p>
+    </th:block>
+    <form th:action="@{/question/create}" th:object="${questionDto}" method="post">
+        <table class="table table-light">
+            <tr>
+                <td><b>Tiêu đề:</b></td>
+                <td>
+                    <input type="text" th:field="*{tittle}" required/>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Trang thai</b></td>
+                <td>
+                    <select th:field="*{status}" >
+                        <option value="">--Chọn loại câu hỏi--</option>
+                        <option th:each="t : ${statuses}" th:value="${t.id}" th:text="${t.name}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Loại câu hỏi:</b></td>
+                <td>
+                    <select th:field="*{type}" >
+                        <option value="">--Chọn loại câu hỏi--</option>
+                        <option th:each="t : ${types}" th:value="${t.id}" th:text="${t.name}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit"  value="Tạo câu hỏi" ></td>
+            </tr>
+        </table>
+    </form>
+    </body>
+</center>
+
+</html>
